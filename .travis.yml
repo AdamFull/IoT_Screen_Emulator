@@ -1,4 +1,4 @@
-dist: trusty
+dist: xenial
 sudo: false
 language: cpp
 
@@ -9,11 +9,9 @@ addons:
     packages:
       - g++-5
       - cmake
-      - libglfw3
+      - build-essential
       - libglfw3-dev
-      - libglew
       - libglew-dev
-      - freeglut3
       - freeglut3-dev
       - libegl1-mesa-dev
 
