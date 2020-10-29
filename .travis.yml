@@ -1,0 +1,22 @@
+dist: trusty
+sudo: false
+language: cpp
+
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-5
+      - cmake
+      - libglfw3
+      - libglfw3-dev
+      - libglew
+      - libglew-dev
+      - freeglut3
+      - freeglut3-dev
+      - libegl1-mesa-dev
+
+script:
+  - CXX=/usr/bin/g++-5 CC=/usr/bin/gcc-5 cmake .
+  - cmake --build . -- -j2
