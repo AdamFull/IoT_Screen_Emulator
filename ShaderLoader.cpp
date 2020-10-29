@@ -53,11 +53,11 @@ std::vector<std::string> ShaderLoader::getFilenames(){
                 }
             }
         #else
-            DIR* dirp = opendir(shaderFolder.c_str());
+            DIR* dirp = opendir(shaderPaths[i].c_str());
             struct dirent * dp;
             while ((dp = readdir(dirp)) != NULL) {
-                std::string temp = data.cFileName;
-                if(temp.find(".glsl") != std::string::npos) {
+                std::string temp = dp->d_name;
+                if(temp.find(".glsl") != std::string::npos || temp.find(".vs") != std::string::npos || temp.find(".fs") != std::string::npos) {
                     foundedFiles.push_back(temp);
                     std::cout << "Founded file " << foundedFiles.back() << std::endl;
                 }
