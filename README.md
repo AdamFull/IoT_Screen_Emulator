@@ -3,7 +3,8 @@
 [![forthebadge](https://forthebadge.com/images/badges/made-with-c-plus-plus.svg)](https://forthebadge.com)
 [![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com)
 
-[![Build Status](https://travis-ci.org/AdamFull/IoT_Screen_Emulator.svg?branch=main)](https://travis-ci.org/AdamFull/IoT_Screen_Emulator) 
+[![Build Status](https://travis-ci.org/AdamFull/IoT_Screen_Emulator.svg?branch=main)](https://travis-ci.org/AdamFull/IoT_Screen_Emulator)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FAdamFull%2FIoT_Screen_Emulator.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FAdamFull%2FIoT_Screen_Emulator?ref=badge_shield)
 [![GitHub Issues](https://img.shields.io/github/issues/AdamFull/IoT_Screen_Emulator.svg)](https://github.com/AdamFull/IoT_Screen_Emulator/issues)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
