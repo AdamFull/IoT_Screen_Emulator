@@ -3,12 +3,9 @@ project(IOT_SCREEN_EMULATOR CXX)
 
 set(CMAKE_CXX_STANDARD 11)
 
-if(CMAKE_COMPILER_IS_GNUCC)
-	option(ENABLE_COVERAGE "Enable coverage reporting for gcc/clang" FALSE)
-	
-	if(ENABLE_COVERAGE)
-		add_compile_options(--coverage -O0)
-	endif()
+option(ENABLE_COVERAGE "Enable coverage reporting for gcc/clang" FALSE)
+if(ENABLE_COVERAGE AND CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+	add_compile_options(-O0 -g --coverage)
 endif()
 
 if(MSVC)

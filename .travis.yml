@@ -21,7 +21,12 @@ addons:
 script:
   - CXX=/usr/bin/g++-5 CC=/usr/bin/gcc-5 cmake . -DENABLE_COVERAGE:BOOL=TRUE
   - cmake --build . -- -j2
-  - bash <(curl -s https://codecov.io/bash)
+
+after_success:
+  - lcov --directory . --capture --output-file coverage.info
+  - lcov --remove coverage.info '/usr/*' "${HOME}"'/.cache/*' --output-file coverage.info
+  - lcov --list coverage.info
+  - bash <(curl -s https://codecov.io/bash) -f coverage.info || echo "Codecov did not collect coverage reports"
 
 notifications:
   email:
