@@ -1,6 +1,8 @@
 dist: xenial
 sudo: false
 language: cpp
+compiler: gcc
+os: linux
 
 addons:
   apt:
@@ -9,6 +11,7 @@ addons:
     packages:
       - g++-5
       - cmake
+      - lcov
       - build-essential
       - libglfw3-dev
       - libglew-dev
@@ -16,6 +19,10 @@ addons:
       - libegl1-mesa-dev
 
 script:
-  - CXX=/usr/bin/g++-5 CC=/usr/bin/gcc-5 cmake -D ENABLE_COVERAGE:BOOL=TRUE
+  - CXX=/usr/bin/g++-5 CC=/usr/bin/gcc-5 cmake . -DENABLE_COVERAGE:BOOL=TRUE
   - cmake --build . -- -j2
   - bash <(curl -s https://codecov.io/bash)
+
+notifications:
+  email:
+    - logotipick@gmail.com
