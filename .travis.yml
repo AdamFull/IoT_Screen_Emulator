@@ -4,6 +4,14 @@ language: cpp
 compiler: gcc
 os: linux
 
+cache:
+  - directories:
+    - $HOME/.cache
+
+install:
+  - mkdir -p $HOME/.cache
+  - touch $HOME/.cache/libIOT_SCREEN_EMULATOR.a
+
 addons:
   apt:
     sources:
