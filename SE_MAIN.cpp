@@ -19,12 +19,6 @@ void window_size_callback(GLFWwindow* window, int width, int height) {
 }
 
 /*****************************************************************************************/
-extern "C"
-void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
-    pData->keyboardHandler((unsigned char)key, scancode, action, mods);
-}
-
-/*****************************************************************************************/
 void createPixelCallback(float x, float y, Color color){
     pData->createPixel(x, y, color);
 }
