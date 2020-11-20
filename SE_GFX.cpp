@@ -195,7 +195,7 @@ void SE_GFX::print(const char* str, Color txColor, Color bgColor){
     unsigned char type = *str;
     if(type>=128) cursorX=cursorX-3;
     while(*str){
-        drawChar(cursorX, cursorY, bgColor, txColor, 1, *str++);
+        drawChar(cursorX, cursorY, bgColor, txColor, textSize, *str++);
         unsigned char type = *str;
         if (type>=128) {cursorX=cursorX+textSize*3;}
         else {cursorX=cursorX+textSize*5;};
@@ -218,7 +218,7 @@ void SE_GFX::printText(const char* str, Color txColor, Color bgColor){
     unsigned char type = *str;
     if(type>=128) cursorX=cursorX-3;
     while(*str){
-        drawChar(cursorX, cursorY, bgColor, txColor, 1, *str++);
+        drawChar(cursorX, cursorY, bgColor, txColor, textSize, *str++);
         unsigned char type = *str;
         if (type>=128) {cursorX=cursorX+textSize*3;}
         else {cursorX=cursorX+textSize*5;};
