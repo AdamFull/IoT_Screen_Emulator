@@ -46,6 +46,16 @@ SE_MAIN::SE_MAIN(uint32_t sWidth, uint32_t sHeight){
 }
 
 /*****************************************************************************************/
+SE_MAIN::SE_MAIN(uint32_t sWidth, uint32_t sHeight, GLKeyboardCallback GL_Keyboard_Callback, GLMouseCallback GL_Mouse_Callback){
+    gfx = SE_GFX(sWidth, sHeight);
+    gfx.setCallback(createPixelCallback);
+    pixelCounter = 0;
+
+    this->GL_Keyboard_Callback = GL_Keyboard_Callback;
+    this->GL_Mouse_Callback = GL_Mouse_Callback;
+}
+
+/*****************************************************************************************/
 SE_MAIN::~SE_MAIN(){
     glDeleteVertexArrays(1, &VAO);
     glDeleteBuffers(1, &VBO);
@@ -80,7 +90,8 @@ bool SE_MAIN::init(std::string shaderFolderPath){
     glfwSwapInterval(1);
 
     glfwSetFramebufferSizeCallback(window, window_size_callback);
-    glfwSetKeyCallback(window, key_callback);
+    glfwSetKeyCallback(window, GL_Keyboard_Callback);
+    glfwSetCursorPosCallback(window, GL_Mouse_Callback);
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)){
         fprintf(stdout, "Failed to initialize GLAD\n");
