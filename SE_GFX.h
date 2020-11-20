@@ -48,7 +48,7 @@ public:
     void println(const char* str, Color txColor, Color bgColor);
     void newString();
 
-    void drawBitmap(uint32_t x, uint32_t y, const char *bitmap, uint32_t w, uint32_t h, Color color);
+    void drawBitmap(uint32_t x, uint32_t y, const unsigned char *bitmap, uint32_t w, uint32_t h, Color color);
 
     void setCursor(uint32_t x, uint32_t y) { cursorX = x; cursorY = y; }
     void setCursorDefault() { cursorX = 0; cursorY = height - 3; }

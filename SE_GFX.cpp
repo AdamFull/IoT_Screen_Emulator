@@ -254,7 +254,7 @@ void SE_GFX::newString(){
 }
 
 /*****************************************************************************************/
-void SE_GFX::drawBitmap(uint32_t x, uint32_t y, const char *bitmap, uint32_t w, uint32_t h, Color color){
+void SE_GFX::drawBitmap(uint32_t x, uint32_t y, const unsigned char *bitmap, uint32_t w, uint32_t h, Color color){
     for (int32_t j=0; j<h; j++) {
         for (int32_t i=0; i<w; i++ ) {
             if (bitmap[i + (j/8)*w] & 1<<(j%8)) { drawPixel(x+i, y+j, color); }
