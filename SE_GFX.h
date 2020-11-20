@@ -52,6 +52,8 @@ public:
 
     void setCursor(uint32_t x, uint32_t y) { cursorX = x; cursorY = y; }
     void setCursorDefault() { cursorX = 0; cursorY = height - 3; }
+
+    void setTextSize(uint32_t new_size) { textSize = new_size; }
 private:
     fnSetPix fnSetPixel;
     //Screen size
