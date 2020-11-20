@@ -246,8 +246,18 @@ void SE_GFX::println(const char* str, Color txColor, Color bgColor){
     newString();
 }
 
+/*****************************************************************************************/
 void SE_GFX::newString(){
     cursorX = 0;
     if(cursorY > 16) cursorY = cursorY - 8;
     else cursorY = height - 3;
+}
+
+/*****************************************************************************************/
+void SE_GFX::drawBitmap(uint32_t x, uint32_t y, const char *bitmap, uint32_t w, uint32_t h, Color color){
+    for (int32_t j=0; j<h; j++) {
+        for (int32_t i=0; i<w; i++ ) {
+            if (bitmap[i + (j/8)*w] & 1<<(j%8)) { drawPixel(x+i, y+j, color); }
+        }
+    }
 }
