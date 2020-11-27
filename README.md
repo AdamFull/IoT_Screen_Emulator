@@ -36,11 +36,11 @@ target_link_libraries(YOUR_PROJECT_NAME IOT_SCREEN_EMULATOR)
 ```
 
 * If you want to update library, execute:
-```bash 
+```console 
     #all submodules
-    git submodule foreach git pull
+    foo@bar:~$ git submodule foreach git pull
     #or single one
-    git submodule update --remote AdamFull/IoT_Screen_Emulator
+    foo@bar:~$ git submodule update --remote AdamFull/IoT_Screen_Emulator
 ```
 
 Requirements
