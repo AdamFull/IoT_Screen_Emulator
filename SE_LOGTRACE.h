@@ -9,6 +9,14 @@
 class LogTrace {
 public:
     virtual ~LogTrace() {}
+    static std::string getTime(){
+        time_t now = time(0);
+        struct tm *timeinfo;
+        char buffer[80];
+        timeinfo = localtime(&now);
+        strftime(buffer,sizeof(buffer),"%d-%m-%Y %H:%M:%S: ",timeinfo);
+        return std::string(buffer);
+    }
     virtual void Trace(std::string) const = 0;
 };
 
@@ -16,8 +24,8 @@ public:
 class ConcreteConsoleLog : public LogTrace {
 public:
     void Trace(std::string toSend) const override {
-        time_t now = time(0);
-        std::cout << std::string(ctime(&now)).append(": ").append(toSend) << std::endl;
+        std::string timeString = getTime();
+        std::cout << timeString.append(toSend) << std::endl;
     }
 };
 
