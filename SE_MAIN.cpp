@@ -28,6 +28,7 @@ SE_MAIN::SE_MAIN(){
     gfx = SE_GFX(240, 320);
     gfx.setCallback(createPixelCallback);
     pixelCounter = 0;
+    glLogTracer = new GetConsoleLog();
 }
 
 /*****************************************************************************************/
@@ -35,6 +36,7 @@ SE_MAIN::SE_MAIN(uint32_t sWidth, uint32_t sHeight){
     gfx = SE_GFX(sWidth, sHeight);
     gfx.setCallback(createPixelCallback);
     pixelCounter = 0;
+    glLogTracer = new GetConsoleLog();
 }
 
 /*****************************************************************************************/
@@ -47,6 +49,7 @@ SE_MAIN::SE_MAIN(uint32_t sWidth, uint32_t sHeight, GLKeyboardCallback GL_Keyboa
     glInputCallbacks.glKbCb = GL_Keyboard_Callback;
     glInputCallbacks.glMCb = GL_Mouse_Callback;
     glInputCallbacks.glMbCb = GL_Mouse_Button_Callback;
+    glLogTracer = new GetConsoleLog();
 }
 
 /*****************************************************************************************/
@@ -55,12 +58,14 @@ SE_MAIN::SE_MAIN(uint32_t sWidth, uint32_t sHeight, GLInputCallbacks *glInputCal
     gfx.setCallback(createPixelCallback);
     pixelCounter = 0;
     this->glInputCallbacks = *glInputCallbacks;
+    glLogTracer = new GetConsoleLog();
 }
 
 /*****************************************************************************************/
 SE_MAIN::~SE_MAIN(){
     glDeleteVertexArrays(1, &VAO);
     glDeleteBuffers(1, &VBO);
+    delete glLogTracer;
     glfwTerminate();
 }
 
@@ -71,7 +76,7 @@ bool SE_MAIN::init(){
     return init("");
 }
 bool SE_MAIN::init(std::string shaderFolderPath){
-    printf("Before init anything is ok.\r\n");
+    glLogTracer->SendLog("Initialisation started.");
     glfwInit();
 
     #ifdef __APPLE__
@@ -83,7 +88,7 @@ bool SE_MAIN::init(std::string shaderFolderPath){
 
     window = glfwCreateWindow(gfx.getWidth(), gfx.getHeignt(), "Screen Simulator", NULL, NULL);
 	if (window == NULL) {
-		fprintf(stdout, "Failed to create GLFW window!\n");
+		glLogTracer->SendLog("Failed to create GLFW window!");
 		glfwTerminate();
 		return false;
 	}
@@ -97,7 +102,7 @@ bool SE_MAIN::init(std::string shaderFolderPath){
     glfwSetMouseButtonCallback(window, glInputCallbacks.glMbCb);
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)){
-        fprintf(stdout, "Failed to initialize GLAD\n");
+        glLogTracer->SendLog("Failed to initialize GLAD");
         return false;
     }
 
@@ -112,10 +117,9 @@ bool SE_MAIN::init(std::string shaderFolderPath){
     glDisable(GL_DEPTH_TEST);
 
     #ifdef GL_SHADING_LANGUAGE_VERSION
-        printf("Supported GLSL version is %s.\n", (char *)glGetString(GL_SHADING_LANGUAGE_VERSION));
+        glLogTracer->SendLog(std::string("Supported GLSL version is ") + (char *)glGetString(GL_SHADING_LANGUAGE_VERSION));
     #endif
-    printf("Using GLEW version %s.\n", glGetString(GL_VERSION));
-	printf("------------------------------\n");
+    glLogTracer->SendLog(std::string("Using GLEW version ") + std::string(reinterpret_cast<const char *>(glGetString(GL_VERSION))));
 
     pData = this;
     return true;

@@ -35,9 +35,9 @@ public:
     virtual ~CreateLogTracer(){};
     virtual LogTrace* FactoryMethod() const = 0;
 
-    void SendLog() const {
+    void SendLog(std::string traceMsg) const {
         LogTrace* logtype = this->FactoryMethod();
-        logtype->Trace("Hello world");
+        logtype->Trace(traceMsg);
         delete logtype;
     }
 };

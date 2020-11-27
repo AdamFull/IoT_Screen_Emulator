@@ -49,11 +49,11 @@ std::vector<std::string> ShaderLoader::getFilenames(){
                 } while (FindNextFile(hFind, &data) != 0);
                 FindClose(hFind);
                 if(foundedFiles.size() > 0) {
-                    std::cout << "Founded " << foundedFiles.size() << " shaders in folder " << shaderPaths[i] << std::endl;
+                    std::cout << "Founded " << foundedFiles.size() << " shaders in dirrectory " << shaderPaths[i] << std::endl;
                     pathPrefix = shaderPaths[i];
                     break;
                 }else{
-                    std::cout << "Can't found shaders in " << shaderPaths[i] << " folder." << std::endl;
+                    std::cout << "Can't found shaders in dirrectory " << shaderPaths[i] << "." << std::endl;
                     continue;
                 }
             }
@@ -69,11 +69,11 @@ std::vector<std::string> ShaderLoader::getFilenames(){
             }
             closedir(dirp);
             if(foundedFiles.size() > 0) {
-                std::cout << "Founded " << foundedFiles.size() << " shaders in folder " << shaderPaths[i] << std::endl;
+                std::cout << "Founded " << foundedFiles.size() << " shaders in dirrectory " << shaderPaths[i] << std::endl;
                 pathPrefix = shaderPaths[i];
                 break;
             }else{
-                std::cout << "Can't found shaders in " << shaderPaths[i] << " folder." << std::endl;
+                std::cout << "Can't found shaders in dirrectory " << shaderPaths[i] << "." << std::endl;
                 continue;
             }
         #endif
