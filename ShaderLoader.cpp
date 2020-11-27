@@ -33,7 +33,7 @@ std::vector<std::string> ShaderLoader::getFilenames(){
     std::vector<std::string> foundedFiles;
 
     for(uint32_t i = 0; i < shaderPaths.size(); i++){
-        glLogTracer->SendLog("Looking for shaders in " + shaderPaths[i] + " folder");
+        glLogTracer->SendLog("Looking for shaders in dirrectory " + shaderPaths[i]);
         #ifdef _WIN32
             std::string pattern(shaderPaths[i]);
             pattern.append("\\*");
@@ -108,21 +108,21 @@ void ShaderLoader::loadShaders(){
             // convert stream into string
             readedShaderCode   = shaderStream.str();	
         }catch(std::ifstream::failure e){
-            std::cout << "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ" << std::endl;
+            glLogTracer->SendLog("ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ");
         }
 
         const char* shaderCode = readedShaderCode.c_str();
 
         if(foundedFiles[i].find("vertex") != std::string::npos || foundedFiles[i].find(".vs") != std::string::npos){
             temporaryShaderId = glCreateShader(GL_VERTEX_SHADER);
-            std::cout << "Compiling vertex shader..." << std::endl;
+            glLogTracer->SendLog("Compiling vertex shader...");
             okFlag = true;
         }else if(foundedFiles[i].find("fragment") != std::string::npos || foundedFiles[i].find(".fs") != std::string::npos){
             temporaryShaderId = glCreateShader(GL_FRAGMENT_SHADER);
-            std::cout << "Compiling fragment shader..." << std::endl;
+            glLogTracer->SendLog("Compiling fragment shader...");
             okFlag = true;
         }else{
-            std::cout << "Error. Unknown shader " << pathPrefix+foundedFiles[i] << std::endl;
+            glLogTracer->SendLog("Error. Unknown shader " + pathPrefix + foundedFiles[i]);
         }
 
         if(okFlag){
@@ -131,7 +131,7 @@ void ShaderLoader::loadShaders(){
             glGetShaderiv(temporaryShaderId, GL_COMPILE_STATUS, &success);
             if(!success){
                 glGetShaderInfoLog(temporaryShaderId, 512, NULL, infoLog);
-                std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
+                glLogTracer->SendLog("ERROR::SHADER::VERTEX::COMPILATION_FAILED" + std::string(infoLog));
             }else{
                 glAttachShader(programm_ID, temporaryShaderId);
                 compiledShaders.push_back(temporaryShaderId);
@@ -139,13 +139,13 @@ void ShaderLoader::loadShaders(){
         }
     }
 
-    std::cout << "Shaders compiled: " << compiledShaders.size() << std::endl;
+    glLogTracer->SendLog("Shaders compiled: " + std::to_string(compiledShaders.size()));
     glLinkProgram(programm_ID);
 
     glGetProgramiv(programm_ID, GL_LINK_STATUS, &success);
     if(!success){
         glGetProgramInfoLog(programm_ID, 512, NULL, infoLog);
-        std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
+        glLogTracer->SendLog("ERROR::SHADER::PROGRAM::LINKING_FAILED" + std::string(infoLog));
     }
 
     for(uint32_t i = 0; i < compiledShaders.size(); i++)
