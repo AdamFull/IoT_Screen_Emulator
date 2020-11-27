@@ -10,20 +10,25 @@
     #include <dirent.h>
 #endif
 
+/*****************************************************************************************/
 ShaderLoader::ShaderLoader(){
-    addShaderPath("shaders\\");     //default path
+    addShaderFolder("shaders\\");     //default path
 }
 
+/*****************************************************************************************/
 ShaderLoader::ShaderLoader(std::string shaderFolder){
-    addShaderPath("shaders\\");
-    addShaderPath(shaderFolder);
+    addShaderFolder("shaders\\");
+    addShaderFolder(shaderFolder);
     loadShaders();
 }
 
+/*****************************************************************************************/
 ShaderLoader::~ShaderLoader(){
-
+    compiledShaders.clear();
+    shaderPaths.clear();
 }
 
+/*****************************************************************************************/
 std::vector<std::string> ShaderLoader::getFilenames(){
     std::vector<std::string> foundedFiles;
 
@@ -76,6 +81,7 @@ std::vector<std::string> ShaderLoader::getFilenames(){
     return foundedFiles;
 }
 
+/*****************************************************************************************/
 void ShaderLoader::loadShaders(){
     std::string readedShaderCode;
     std::ifstream shaderFile;

@@ -12,7 +12,7 @@ public:
     ShaderLoader(std::string  shaderFolder);
     ~ShaderLoader();
 
-    void addShaderPath(std::string newPath) { shaderPaths.push_back(newPath); }
+    void addShaderFolder(std::string newPath) { shaderPaths.push_back(newPath); }
 
     std::vector<std::string> getFilenames();
 

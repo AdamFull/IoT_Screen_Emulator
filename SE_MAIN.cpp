@@ -4,8 +4,6 @@
 #include "stdlib.h"
 #include <cstring>
 
-#include <chrono>
-
 static SE_MAIN* pData;
 
 /*****************************************************************************************/
@@ -46,9 +44,17 @@ SE_MAIN::SE_MAIN(uint32_t sWidth, uint32_t sHeight, GLKeyboardCallback GL_Keyboa
     gfx.setCallback(createPixelCallback);
     pixelCounter = 0;
 
-    this->GL_Keyboard_Callback = GL_Keyboard_Callback;
-    this->GL_Mouse_Callback = GL_Mouse_Callback;
-    this->GL_Mouse_Button_Callback = GL_Mouse_Button_Callback;
+    glInputCallbacks->glKbCb = GL_Keyboard_Callback;
+    glInputCallbacks->glMCb = GL_Mouse_Callback;
+    glInputCallbacks->glMbCb = GL_Mouse_Button_Callback;
+}
+
+/*****************************************************************************************/
+SE_MAIN::SE_MAIN(uint32_t sWidth, uint32_t sHeight, GLInputCallbacks *glInputCallbacks){
+    gfx = SE_GFX(sWidth, sHeight);
+    gfx.setCallback(createPixelCallback);
+    pixelCounter = 0;
+    this->glInputCallbacks = glInputCallbacks;
 }
 
 /*****************************************************************************************/
@@ -86,9 +92,9 @@ bool SE_MAIN::init(std::string shaderFolderPath){
     glfwSwapInterval(1);
 
     glfwSetFramebufferSizeCallback(window, window_size_callback);
-    glfwSetKeyCallback(window, GL_Keyboard_Callback);
-    glfwSetCursorPosCallback(window, GL_Mouse_Callback);
-    glfwSetMouseButtonCallback(window, GL_Mouse_Button_Callback);
+    glfwSetKeyCallback(window, glInputCallbacks->glKbCb);
+    glfwSetCursorPosCallback(window, glInputCallbacks->glMCb);
+    glfwSetMouseButtonCallback(window, glInputCallbacks->glMbCb);
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)){
         fprintf(stdout, "Failed to initialize GLAD\n");
@@ -96,7 +102,7 @@ bool SE_MAIN::init(std::string shaderFolderPath){
     }
 
     //Shaders initialisation
-    shaderLoader.addShaderPath(shaderFolderPath);
+    shaderLoader.addShaderFolder(shaderFolderPath);
     shaderLoader.loadShaders();
 
     //Init vertex array
@@ -110,8 +116,6 @@ bool SE_MAIN::init(std::string shaderFolderPath){
     #endif
     printf("Using GLEW version %s.\n", glGetString(GL_VERSION));
 	printf("------------------------------\n");
-	printf("Press space bar to cycle thru images.\n");
-	printf("Press ESCAPE or 'X' or 'x' to exit.\n");
 
     pData = this;
     return true;
@@ -138,10 +142,7 @@ void SE_MAIN::initVertexes(){
 
 /*****************************************************************************************/
 void SE_MAIN::display(){
-    static std::chrono::steady_clock::time_point prv = std::chrono::steady_clock::now();
-    std::chrono::steady_clock::time_point cur = std::chrono::steady_clock::now();
-    const float dt = std::chrono::duration< float >( cur - prv ).count();
-    prv = cur;
+    frameTimeStart();
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
@@ -150,13 +151,9 @@ void SE_MAIN::display(){
 
     glDrawArrays(GL_POINTS, 0, pixelCounter);
 
-    gfx.setCursor(0, 7);
-    char buffer[64];
-    sprintf(buffer, "FPS: %d", (int)(1000/dt*1000));
-    gfx.print(buffer);
-
     glfwSwapBuffers(window);
     glfwPollEvents();
+    frameTimeStop();
 }
 
 /*****************************************************************************************/
@@ -172,26 +169,8 @@ bool SE_MAIN::getWindowWorker(){
 }
 
 /*****************************************************************************************/
-void SE_MAIN::keyboardHandler(unsigned char c, int scancode, int action, int mods){
-    if (action == GLFW_RELEASE) {
-        printf("Pixels in array: %llu \r\n", pixelCounter);
-		return;			// Ignore key up (key release) events
-	}
-	if (c == GLFW_KEY_ESCAPE || c == GLFW_KEY_X) {
-		glfwSetWindowShouldClose(window, true);
-	}
-	else if (c == GLFW_KEY_SPACE) {
-		//CurrentMode = (CurrentMode+1) % 6;	// Takes on values from 0 to 5
-	}
-}
-
-/*****************************************************************************************/
 void SE_MAIN::createPixel(float x, float y, Color color){
     Pixel pixel = {x, y, 0.0f, color};
-    /*pixel.pos.x = x;
-    pixel.pos.y = y;
-    pixel.pos.z = 0.0f;
-    pixel.color = color;*/
     setPixel(pixel);
     pixelCounter++;
 }
@@ -205,4 +184,17 @@ void SE_MAIN::setPixel(Pixel pixel){
 
     data.pix = pixel;
     glBufferSubData(GL_ARRAY_BUFFER, pixelCounter*sizeof(data.floats), sizeof(data.floats), &data.floats);
+}
+
+/*****************************************************************************************/
+void SE_MAIN::frameTimeStart(){
+    prvTime = std::chrono::steady_clock::now();
+    curTime = std::chrono::steady_clock::now();
+    prvTime = curTime;
+}
+
+/*****************************************************************************************/
+void SE_MAIN::frameTimeStop(){
+    curTime = std::chrono::steady_clock::now();
+    frameTime = std::chrono::duration<double>(curTime - prvTime).count();
 }
