@@ -6,6 +6,8 @@
 #include <string>
 #include <vector>
 
+#include "SE_LOGTRACE.h"
+
 class ShaderLoader{
 public:
     ShaderLoader();
@@ -13,6 +15,8 @@ public:
     ~ShaderLoader();
 
     void addShaderFolder(std::string newPath) { shaderPaths.push_back(newPath); }
+
+    void setLogTracer(CreateLogTracer *glLogTracer) { this->glLogTracer = glLogTracer; }
 
     std::vector<std::string> getFilenames();
 
@@ -35,6 +39,8 @@ private:
     std::vector<std::string> shaderPaths;
     std::string pathPrefix;
     GLuint programm_ID;
+
+    CreateLogTracer *glLogTracer;
 };
 
 

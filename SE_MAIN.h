@@ -9,7 +9,6 @@
 //#include "glad/glad.h"
 #include <GLFW/glfw3.h>
 #include "SE_GFX.h"
-#include "SE_LOGTRACE.h"
 
 #include <chrono>
 

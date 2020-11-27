@@ -29,6 +29,7 @@ SE_MAIN::SE_MAIN(){
     gfx.setCallback(createPixelCallback);
     pixelCounter = 0;
     glLogTracer = new GetConsoleLog();
+    shaderLoader.setLogTracer(glLogTracer);
 }
 
 /*****************************************************************************************/
@@ -37,6 +38,7 @@ SE_MAIN::SE_MAIN(uint32_t sWidth, uint32_t sHeight){
     gfx.setCallback(createPixelCallback);
     pixelCounter = 0;
     glLogTracer = new GetConsoleLog();
+    shaderLoader.setLogTracer(glLogTracer);
 }
 
 /*****************************************************************************************/
@@ -50,6 +52,7 @@ SE_MAIN::SE_MAIN(uint32_t sWidth, uint32_t sHeight, GLKeyboardCallback GL_Keyboa
     glInputCallbacks.glMCb = GL_Mouse_Callback;
     glInputCallbacks.glMbCb = GL_Mouse_Button_Callback;
     glLogTracer = new GetConsoleLog();
+    shaderLoader.setLogTracer(glLogTracer);
 }
 
 /*****************************************************************************************/
@@ -59,6 +62,7 @@ SE_MAIN::SE_MAIN(uint32_t sWidth, uint32_t sHeight, GLInputCallbacks *glInputCal
     pixelCounter = 0;
     this->glInputCallbacks = *glInputCallbacks;
     glLogTracer = new GetConsoleLog();
+    shaderLoader.setLogTracer(glLogTracer);
 }
 
 /*****************************************************************************************/
@@ -119,7 +123,7 @@ bool SE_MAIN::init(std::string shaderFolderPath){
     #ifdef GL_SHADING_LANGUAGE_VERSION
         glLogTracer->SendLog(std::string("Supported GLSL version is ") + (char *)glGetString(GL_SHADING_LANGUAGE_VERSION));
     #endif
-    glLogTracer->SendLog(std::string("Using GLEW version ") + std::string(reinterpret_cast<const char *>(glGetString(GL_VERSION))));
+    glLogTracer->SendLog("Using GLEW version " + std::string(reinterpret_cast<const char *>(glGetString(GL_VERSION))));
 
     pData = this;
     return true;

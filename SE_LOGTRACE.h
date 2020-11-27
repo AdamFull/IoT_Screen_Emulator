@@ -14,7 +14,7 @@ public:
         struct tm *timeinfo;
         char buffer[80];
         timeinfo = localtime(&now);
-        strftime(buffer,sizeof(buffer),"%d-%m-%Y %H:%M:%S: ",timeinfo);
+        strftime(buffer,sizeof(buffer),"[%d-%m-%Y %H:%M:%S]: ",timeinfo);
         return std::string(buffer);
     }
     virtual void Trace(std::string) const = 0;

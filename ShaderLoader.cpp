@@ -33,7 +33,7 @@ std::vector<std::string> ShaderLoader::getFilenames(){
     std::vector<std::string> foundedFiles;
 
     for(uint32_t i = 0; i < shaderPaths.size(); i++){
-        std::cout << "Looking for shaders in " << shaderPaths[i] << " folder" << std::endl;
+        glLogTracer->SendLog("Looking for shaders in " + shaderPaths[i] + " folder");
         #ifdef _WIN32
             std::string pattern(shaderPaths[i]);
             pattern.append("\\*");
@@ -44,16 +44,16 @@ std::vector<std::string> ShaderLoader::getFilenames(){
                     std::string temp = data.cFileName;
                     if(temp.find(".glsl") != std::string::npos || temp.find(".vs") != std::string::npos || temp.find(".fs") != std::string::npos) {
                         foundedFiles.push_back(temp);
-                        std::cout << "Founded file " << foundedFiles.back() << std::endl;
+                        glLogTracer->SendLog("Founded file " + foundedFiles.back());
                     }
                 } while (FindNextFile(hFind, &data) != 0);
                 FindClose(hFind);
                 if(foundedFiles.size() > 0) {
-                    std::cout << "Founded " << foundedFiles.size() << " shaders in dirrectory " << shaderPaths[i] << std::endl;
+                    glLogTracer->SendLog("Founded " + std::to_string(foundedFiles.size()) + " shaders in dirrectory " + shaderPaths[i]);
                     pathPrefix = shaderPaths[i];
                     break;
                 }else{
-                    std::cout << "Can't found shaders in dirrectory " << shaderPaths[i] << "." << std::endl;
+                    glLogTracer->SendLog("Can't found shaders in dirrectory " + shaderPaths[i]);
                     continue;
                 }
             }
@@ -64,16 +64,16 @@ std::vector<std::string> ShaderLoader::getFilenames(){
                 std::string temp = dp->d_name;
                 if(temp.find(".glsl") != std::string::npos || temp.find(".vs") != std::string::npos || temp.find(".fs") != std::string::npos) {
                     foundedFiles.push_back(temp);
-                    std::cout << "Founded file " << foundedFiles.back() << std::endl;
+                    glLogTracer->SendLog("Founded file " + foundedFiles.back());
                 }
             }
             closedir(dirp);
             if(foundedFiles.size() > 0) {
-                std::cout << "Founded " << foundedFiles.size() << " shaders in dirrectory " << shaderPaths[i] << std::endl;
+                glLogTracer->SendLog("Founded " + std::to_string(foundedFiles.size()) + " shaders in dirrectory " + shaderPaths[i]);
                 pathPrefix = shaderPaths[i];
                 break;
             }else{
-                std::cout << "Can't found shaders in dirrectory " << shaderPaths[i] << "." << std::endl;
+                glLogTracer->SendLog("Can't found shaders in dirrectory " + shaderPaths[i]);
                 continue;
             }
         #endif
