@@ -8,7 +8,7 @@
 /*****************************************************************************************/
 class LogTrace {
 public:
-    virtual ~LogType() {}
+    virtual ~LogTrace() {}
     virtual void Trace(std::string) const = 0;
 };
 
@@ -16,7 +16,8 @@ public:
 class ConcreteConsoleLog : public LogTrace {
 public:
     void Trace(std::string toSend) const override {
-        std::cout << std::string(ctime(&time(0))) + ": " + toSend << std::endl;
+        time_t now = time(0);
+        std::cout << std::string(ctime(&now)).append(": ").append(toSend) << std::endl;
     }
 };
 
@@ -38,7 +39,6 @@ public:
         LogTrace* logtype = this->FactoryMethod();
         logtype->Trace("Hello world");
         delete logtype;
-        return result;
     }
 };
 
@@ -51,7 +51,7 @@ public:
 };
 
 /*****************************************************************************************/
-class GetConsoleLog : public CreateLogTracer {
+class GetFileLog : public CreateLogTracer {
 public:
     LogTrace* FactoryMethod() const override {
         return new ConcreteFileLog();
