@@ -18,9 +18,12 @@ Installation
 
 -----
 
-* Create subdirrectory named "screen_emulator" in your project.
+* Open terminal in your project folder.
 
-* Pull project files to this derrectory.
+* Execute command: 
+```bash 
+git submodule add https://github.com/AdamFull/IoT_Screen_Emulator.
+```
 
 * In your cmake file add:
 
@@ -30,6 +33,14 @@ add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/screen_emulator/)
 
 #and link with your project
 target_link_libraries(YOUR_PROJECT_NAME IOT_SCREEN_EMULATOR)
+```
+
+* If you want to update library, execute:
+```bash 
+    #all submodules
+    git submodule foreach git pull
+    #or single one
+    git submodule update --remote AdamFull/IoT_Screen_Emulator
 ```
 
 Requirements
