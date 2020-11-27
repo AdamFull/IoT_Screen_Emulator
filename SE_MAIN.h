@@ -72,7 +72,7 @@ private:
 
 //Callbacks
 private:
-    GLInputCallbacks *glInputCallbacks;
+    GLInputCallbacks glInputCallbacks;
 
 public:
     void createPixel(float x, float y, Color color);

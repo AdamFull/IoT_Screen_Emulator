@@ -21,26 +21,28 @@ Installation
 * Open terminal in your project folder.
 
 * Execute command: 
+
 ```bash 
-git submodule add https://github.com/AdamFull/IoT_Screen_Emulator.
+git submodule add https://github.com/AdamFull/IoT_Screen_Emulator
 ```
 
 * In your cmake file add:
 
 ```cmake
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/screen_emulator/)
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/screen_emulator/)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/IoT_Screen_Emulator/)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/IoT_Screen_Emulator/)
 
 #and link with your project
 target_link_libraries(YOUR_PROJECT_NAME IOT_SCREEN_EMULATOR)
 ```
 
 * If you want to update library, execute:
-```console 
+
+```bash 
     #all submodules
-    foo@bar:~$ git submodule foreach git pull
+    git submodule foreach git pull
     #or single one
-    foo@bar:~$ git submodule update --remote AdamFull/IoT_Screen_Emulator
+    git submodule update --remote AdamFull/IoT_Screen_Emulator
 ```
 
 Requirements
@@ -51,9 +53,9 @@ Requirements
 
 * Installed freeglut3 and higher
 
-* Installed glew-2.x.x and higher
+* Installed glew-2.x.x (higher was not tested)
 
-* Installed glfw-3.x.x and higher
+* Installed glfw-3.x.x (higher was not tested)
 
 * GLSL version support 330 core
 

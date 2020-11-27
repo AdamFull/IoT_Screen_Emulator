@@ -44,9 +44,9 @@ SE_MAIN::SE_MAIN(uint32_t sWidth, uint32_t sHeight, GLKeyboardCallback GL_Keyboa
     gfx.setCallback(createPixelCallback);
     pixelCounter = 0;
 
-    glInputCallbacks->glKbCb = GL_Keyboard_Callback;
-    glInputCallbacks->glMCb = GL_Mouse_Callback;
-    glInputCallbacks->glMbCb = GL_Mouse_Button_Callback;
+    glInputCallbacks.glKbCb = GL_Keyboard_Callback;
+    glInputCallbacks.glMCb = GL_Mouse_Callback;
+    glInputCallbacks.glMbCb = GL_Mouse_Button_Callback;
 }
 
 /*****************************************************************************************/
@@ -54,7 +54,7 @@ SE_MAIN::SE_MAIN(uint32_t sWidth, uint32_t sHeight, GLInputCallbacks *glInputCal
     gfx = SE_GFX(sWidth, sHeight);
     gfx.setCallback(createPixelCallback);
     pixelCounter = 0;
-    this->glInputCallbacks = glInputCallbacks;
+    this->glInputCallbacks = *glInputCallbacks;
 }
 
 /*****************************************************************************************/
@@ -92,9 +92,9 @@ bool SE_MAIN::init(std::string shaderFolderPath){
     glfwSwapInterval(1);
 
     glfwSetFramebufferSizeCallback(window, window_size_callback);
-    glfwSetKeyCallback(window, glInputCallbacks->glKbCb);
-    glfwSetCursorPosCallback(window, glInputCallbacks->glMCb);
-    glfwSetMouseButtonCallback(window, glInputCallbacks->glMbCb);
+    glfwSetKeyCallback(window, glInputCallbacks.glKbCb);
+    glfwSetCursorPosCallback(window, glInputCallbacks.glMCb);
+    glfwSetMouseButtonCallback(window, glInputCallbacks.glMbCb);
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)){
         fprintf(stdout, "Failed to initialize GLAD\n");
