@@ -2,6 +2,7 @@
 
 [![forthebadge](https://forthebadge.com/images/badges/made-with-c-plus-plus.svg)](https://forthebadge.com)
 [![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FAdamFull%2FIoT_Screen_Emulator.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FAdamFull%2FIoT_Screen_Emulator?ref=badge_shield)
 
 [![Build Status](https://travis-ci.org/AdamFull/IoT_Screen_Emulator.svg?branch=main)](https://travis-ci.org/AdamFull/IoT_Screen_Emulator)
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FAdamFull%2FIoT_Screen_Emulator.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FAdamFull%2FIoT_Screen_Emulator?ref=badge_shield)
@@ -93,3 +94,6 @@ License
 -------
 
 MIT © [AdamFull](https://github.com/AdamFull).
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FAdamFull%2FIoT_Screen_Emulator.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FAdamFull%2FIoT_Screen_Emulator?ref=badge_large)
